@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Hanzo Sushi</title>
+    <meta name="description" content="My awesome page" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        font-weight: 300;
+        color: #424650;
+        background-color: #e0dacc;
+      }
+
+      #mobile {
+        display: none;
+      }
+
+      .page-header > h1 {
+        margin-top: 200px;
+        margin-bottom: 100px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        background-color: #9eb0ab;
+        flex-direction: row;
+        height: 100px;
+        position: fixed;
+        width: 100%;
+      }
+
+      nav > img {
+        display: flex;
+        justify-content: flex-start;
+        flex: 1;
+        width: 100px;
+        height: 100px;
+        margin-right: 1.5rem;
+      }
+
+      nav > div {
+        display: flex;
+        justify-content: space-evenly;
+        flex: 4;
+        padding: 1.5rem 1.5rem;
+        height: 100%;
+      }
+
+      nav > div > a {
+        display: flex;
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: black;
+        height: 100%;
+        align-items: center;
+      }
+
+      nav > div > a:hover {
+        border-radius: 5px;
+        color: rgb(216, 92, 48);
+        cursor: pointer;
+      }
+
+      nav > div:nth-child(3) > a {
+        color: rgb(216, 92, 48);
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 2rem 0;
+      }
+
+      nav > div:first-child {
+        height: 100%;
+      }
+
+      #drop + ul {
+        position: absolute;
+        background-color: #e9eeeb;
+        display: none;
+        padding: 1rem;
+        margin-top: 6rem;
+      }
+
+      #drop + ul:hover {
+        display: block;
+      }
+
+      #drop + ul:hover > li:hover {
+        cursor: pointer;
+        color: rgb(216, 92, 48);
+      }
+
+      #drop + ul > li {
+        list-style: none;
+        padding: 0.5rem;
+      }
+
+      #drop:hover + ul {
+        display: block;
+      }
+
+      #item-container {
+        display: grid;
+        padding: 2rem 0;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 100px;
+      }
+
+      #item-container > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+        height: 400px;
+        width: 300px;
+        border: 3px solid #566c6e;
+        gap: 1rem;
+        padding-bottom: 50px;
+      }
+
+      #item-container div img {
+        display: flex;
+        flex: 8;
+        width: 200px;
+        max-width: 200px;
+        height: 200px;
+        max-height: 200px;
+      }
+
+      #item-container div h3 {
+        display: flex;
+        flex: 4;
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      #item-container div p {
+        display: flex;
+        flex: 2;
+        font-size: 1.2rem;
+        margin: 2rem 0;
+      }
+
+      #item-container button:hover {
+        background-color: rgb(216, 92, 48);
+        cursor: pointer;
+        border-color: rgb(216, 92, 48);
+      }
+
+      #hamburger-menu {
+        display: none;
+      }
+
+      #hamburger-menu > .barre {
+        width: 30px;
+        height: 5px;
+        background-color: black;
+        margin: 6px 0;
+      }
+
+      #mobile-menu {
+        display: none;
+      }
+
+      @media all and (max-width: 1700px) {
+        #item-container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media all and (max-width: 1300px) {
+        #item-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media all and (max-width: 800px) {
+        #item-container {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        nav > div.desktop {
+          visibility: hidden;
+        }
+
+        .page-header > h1 {
+          font-size: 2rem;
+          margin-left: 0.5rem;
+        }
+
+        #mobile {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #hamburger-menu {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="myclass">
+      <img
+        id="logo"
+        src="https://scontent-lga3-2.xx.fbcdn.net/v/t1.15752-9/419721113_701183455153932_7791225661720578659_n.png?_nc_cat=107&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=eblSKl-QjJIAX8-KLfc&_nc_ht=scontent-lga3-2.xx&oh=03_AdR-9Ufq6_sPu9tWw659RiVrvXn6Iot3ymCm1Ub80pXr0w&oe=65CFFA42"
+      />
+      <div class="desktop">
+        <a id="drop" href="#">Menu Sushis</a>
+        <ul class="dropdown-content">
+          <li>Nigiris & Sashimis</li>
+          <li>Makis Surprises</li>
+          <li>Hosomaki</li>
+          <li>Combinaisons Du Chef</li>
+          <li>Futomaki</li>
+          <li>Extras</li>
+        </ul>
+      </div>
+
+      <div class="desktop"><a href="#">Desserts</a></div>
+      <div class="desktop">
+        <a id="drop" href="#">Cocktails & Vins</a>
+        <ul class="dropdown-content">
+          <li>Vins Blancs</li>
+          <li>Vin Rouge</li>
+          <li>Rosé</li>
+          <li>Mousseux</li>
+          <li>Champagnes</li>
+          <li>Sake</li>
+          <li>Bières</li>
+          <li>Bières Sans Alccool</li>
+          <li>Bières En Fût</li>
+          <li>Cocktails Hanzo</li>
+          <li>Cocktails Classiques</li>
+          <li>Sangrias Maison</li>
+          <li>Cafés Alcoolisés</li>
+          <li>Mocktails</li>
+          <li>Digestifs</li>
+        </ul>
+      </div>
+      <div id="mobile">
+        <div id="hamburger-menu">
+          <div class="barre"></div>
+          <div class="barre"></div>
+          <div class="barre"></div>
+        </div>
+        <div id="mobile-menu"></div>
+      </div>
+    </nav>
+    <div class="page-header">
+      <h1>Chez Hanzo toujours GROS toujours BON !</h1>
+      <div id="item-container">
+        <div>
+          <h3>Brownies Décadant</h3>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHHWiWcwsam1ZLaIvwVu2EXIH_1hqCnCg3fw&usqp=CAU"
+          />
+          <p><span>10.00 CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+        <div>
+          <h3>Crème Glacée Tempura à la Vanille</h3>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCgE5wKUKi8wd7kvd6PYFH0qRdH0LhREYvTQ&usqp=CAU"
+          />
+          <p><span>12.00 CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+        <div>
+          <h3>Mochis aux saveurs variées</h3>
+          <img
+            src="https://www.puyricard.fr/5991-large_default/mochis-glaces-mangue.jpg"
+          />
+          <p><span>4.00 (Unités) CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+        <div>
+          <h3>Gelato Tartufo Chocolaté</h3>
+          <img
+            src="https://img.cuisineaz.com/1024x576/2023/04/05/i192353-tartufo-di-pizzo.jpg"
+          />
+          <p><span>10.00 CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+        <div>
+          <h3>Gâteau-Mousse aux Trois Chocolats</h3>
+          <img
+            src="https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_976,q_auto,w_1300/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/122139/IMG_2505.jpg"
+          />
+          <p><span>16.00 CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+        <div>
+          <h3>Fondue aux Chocolats avec son Accompagnement de Petits Fruits</h3>
+          <img
+            src="https://www.partstown.com/about-us/wp-content/uploads/2022/09/Dessert-Menu-Ideas-Chocolate-Fondue.jpg"
+          />
+          <p><span>22.00 CAD$ + Taxes</span></p>
+          <button>Commander</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
