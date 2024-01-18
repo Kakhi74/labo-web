@@ -1,0 +1,174 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+  color: #424650;
+  background-color: #e0dacc;
+}
+
+.page-header > h1 {
+  margin-top: 200px;
+  margin-bottom: 100px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  background-color: #9eb0ab;
+  flex-direction: row;
+  height: 100px;
+  position: fixed;
+  width: 100%;
+}
+
+nav > img {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+  width: 100px;
+  height: 100px;
+  margin-right: 1.5rem;
+}
+
+nav > div {
+  display: flex;
+  justify-content: space-evenly;
+  flex: 4;
+  padding: 1.5rem 1.5rem;
+  height: 100%;
+}
+
+nav > div > a {
+  display: flex;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: black;
+  height: 100%;
+  align-items: center;
+}
+
+nav > div > a:hover {
+  border-radius: 5px;
+  color: rgb(216, 92, 48);
+  cursor: pointer;
+}
+
+nav > div:nth-child(3) > a {
+  color: rgb(216, 92, 48);
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+nav > div:first-child {
+  height: 100%;
+}
+
+#drop + ul {
+  position: absolute;
+  background-color: #e9eeeb;
+  display: none;
+  padding: 1rem;
+  margin-top: 6rem;
+}
+
+#drop + ul:hover {
+  display: block;
+}
+
+#drop + ul:hover > li:hover {
+  cursor: pointer;
+  color: rgb(216, 92, 48);
+}
+
+#drop + ul > li {
+  list-style: none;
+  padding: 0.5rem;
+}
+
+#drop:hover + ul {
+  display: block;
+}
+
+#item-container {
+  display: grid;
+  padding: 2rem 0;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 100px;
+}
+
+#item-container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  height: 400px;
+  width: 300px;
+  border: 3px solid #566c6e;
+  gap: 1rem;
+  padding-bottom: 50px;
+}
+
+#item-container div img {
+  display: flex;
+  flex: 8;
+  width: 200px;
+  max-width: 200px;
+  height: 200px;
+  max-height: 200px;
+}
+
+#item-container div h3 {
+  display: flex;
+  flex: 4;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+#item-container div p {
+  display: flex;
+  flex: 2;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+#item-container button:hover {
+  background-color: rgb(216, 92, 48);
+  cursor: pointer;
+  border-color: rgb(216, 92, 48);
+}
+
+@media all and (max-width: 1700px) {
+  #item-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media all and (max-width: 1300px) {
+  #item-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media all and (max-width: 800px) {
+  #item-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  nav > div.desktop {
+    visibility: hidden;
+  }
+
+  .page-header > h1 {
+    font-size: 2rem;
+    margin-left: 0.5rem;
+  }
+}
