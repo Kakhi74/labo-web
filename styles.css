@@ -150,6 +150,21 @@ nav > div:first-child {
   border-color: rgb(216, 92, 48);
 }
 
+#hamburger-menu {
+  display: none;
+}
+
+#hamburger-menu > .barre {
+  width: 30px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+#mobile-menu {
+  display: none;
+}
+
 @media all and (max-width: 1700px) {
   #item-container {
     grid-template-columns: repeat(3, 1fr);
@@ -160,14 +175,6 @@ nav > div:first-child {
   #item-container {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-#hamburger-menu {
-  display: none; /* Caché par défaut */
-}
-
-#mobile-menu {
-  display: none;
 }
 
 @media all and (max-width: 800px) {
@@ -193,16 +200,4 @@ nav > div:first-child {
   #hamburger-menu {
     display: block;
   }
-
-  #hamburger-menu:hover + #mobile-menu {
-    display: block;
-    margin-top: 10px;
-  }
-}
-
-#hamburger-menu > .barre {
-  width: 30px;
-  height: 5px;
-  background-color: black;
-  margin: 6px 0;
 }
