@@ -1,4 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
+  padding: 0;
   margin: 0;
+  font-family: "Rubik", sans-serif;
+  background-color: #18191a;
+}
+
+strong {
+  padding: 0;
+  margin: 0;
+}
+
+label,
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
   padding: 0;
 }
