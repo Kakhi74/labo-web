@@ -1,22 +1,35 @@
-.logo img {
+.logosearch {
   display: flex;
-  height: 150%;
-  margin-top: -18px;
-  margin-left: -8px;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  flex-direction: row;
+}
+
+.logoWrapper {
+  height: 20%;
+  width: 20%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+img.logo {
   position: absolute;
-  top: 0;
-  left: 0;
+  height: 600%;
 }
 
 .open_search {
   border-radius: 3px;
   position: relative;
 }
+
 @media (max-width: 991px) {
   .open_search {
-    margin: 0;
-    position: static;
-    text-align: right;
   }
 }
 
@@ -57,7 +70,7 @@
 
   background: white no-repeat;
   transition: 100ms all linear 0s;
-  background-image: linear-gradient(to bottom, #f35b2a 0%, #fb3f00 90%),
+  background-image: linear-gradient(to bottom, #0b8dd1 0%, #2f6b8b 90%),
     linear-gradient(to bottom, #e1e1e1, #e1e1e1);
   background-size: 0 2px, 100% 1px;
   background-position: 50% 100%, 50% 100%;

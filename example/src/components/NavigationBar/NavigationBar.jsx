@@ -20,24 +20,22 @@ function NavigationBar() {
 
   return (
     <>
-      <div className={classes.logo}>
-        <Link to="/">
-          <img className={classes.fas} src={logo} alt="logo" />
+      <div className={classes.logosearch}>
+        <Link to="/" className={classes.logoWrapper}>
+          <img className={classes.logo} src={logo} alt="logo" />
         </Link>
-      </div>
-      <label className={classes.open_search} htmlFor={classes.open_search}>
-        <FontAwesomeIcon
-          className={`${classes.fas} ${classes.fa_search}`}
-          icon={faSearch}
-        />
-        <input
-          className={classes.input_open_search}
-          id={classes.open_search}
-          type="checkbox"
-          name="menu"
-        />
-        <div className={classes.search}>
-          <form onSubmit={handleSubmit}>
+        <label className={classes.open_search} htmlFor={classes.open_search}>
+          <FontAwesomeIcon
+            className={`${classes.fas} ${classes.fa_search}`}
+            icon={faSearch}
+          />
+          <input
+            className={classes.input_open_search}
+            id={classes.open_search}
+            type="checkbox"
+            name="menu"
+          />
+          <form className={classes.search} onSubmit={handleSubmit}>
             <button className={classes.button_search} type="submit">
               <FontAwesomeIcon
                 className={`${classes.fas} ${classes.fa_search}`}
@@ -52,8 +50,8 @@ function NavigationBar() {
               className={classes.input_search}
             />
           </form>
-        </div>
-      </label>
+        </label>
+      </div>
       <nav className={classes.nav_content}>
         <ul className={classes.nav_content_list}>
           <li
