@@ -16,6 +16,7 @@ function fetchRestaurants() {
 async function displayRestaurants() {
   try {
     const restaurants = await fetchRestaurants();
+    console.log(restaurants);
     let genres = new Set();
 
     for (const restaurant of restaurants.items) {

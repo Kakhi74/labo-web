@@ -1,4 +1,33 @@
-.logosearch {
+.navcontainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.navcontainer > .logocontainer {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.navcontainer > .logocontainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navcontainer > .searchcontainer {
+  border: 1px solid green;
+  flex: 6;
+  display: hidden;
+}
+
+.navcontainer > .logincontainer {
+  border: 1px solid yellow;
+  flex: 3;
+}
+
+/* .logosearch {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -264,4 +293,4 @@ img.logo {
 }
 .nav_content .account_login .login_text strong {
   display: block;
-}
+} */

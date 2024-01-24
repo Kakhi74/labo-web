@@ -2,10 +2,10 @@
 import style from "./RestoNetflix.module.css"; // Make sure to create this CSS module
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function RestoNetflix() {
+export default function RestoNetflix(props) {
   return (
     <>
-      <h2 className={style.section_title}>Trending now</h2>
+      <h2 className={style.section_title}>{props.genre}</h2>
 
       <div className={style.media_container}>
         <div className={style.media_scroller}>
@@ -199,5 +199,3 @@ function RestoNetflix() {
     </>
   );
 }
-
-export default RestoNetflix;
