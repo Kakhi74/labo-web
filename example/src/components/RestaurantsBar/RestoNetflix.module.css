@@ -20,8 +20,6 @@ svg {
   display: block;
 }
 
-/* general styling */
-
 .container {
   inline-size: min(100% - 4rem, 70rem);
   margin-inline: auto;
@@ -36,8 +34,6 @@ svg {
   margin-block: 4rem 1rem;
   margin-left: 50px;
 }
-
-/* media scroller */
 
 .media_container {
   position: relative;
@@ -126,8 +122,6 @@ svg {
   .next {
   display: none;
 }
-
-/* navigation indicators */
 
 .navigation_indicators {
   opacity: 0;

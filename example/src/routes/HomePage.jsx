@@ -6,48 +6,60 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-function aggregateCounts(obj) {
+const aggregateGenresCounts = (obj) => {
   let counts = {};
   for (let key in obj) {
     if (key.includes(",")) {
-      for (const k of key.split(",")) {
-        if (!counts[k]) {
-          counts[k] = 0;
-        }
+      key.split(",").forEach((k) => {
+        if (!counts[k]) counts[k] = 0;
         counts[k] += obj[key].length;
-      }
+      });
     } else {
-      if (!counts[key]) {
-        counts[key] = 0;
-      }
+      if (!counts[key]) counts[key] = 0;
       counts[key] += obj[key].length;
     }
   }
   return counts;
-}
+};
 
 const initializeGenres = (restaurants) => {
-  let genres = new Set();
+  let genres = new Array();
   const categories = Object.groupBy(restaurants, (resto) => resto.genres);
 
-  let counts = aggregateCounts(categories);
+  let counts = aggregateGenresCounts(categories);
   let sortableArray = [];
   for (let category in counts) {
     sortableArray.push({ key: category, count: counts[category] });
   }
 
-  const sortedCategories = sortableArray.sort((a, b) => b.count - a.count);
-  console.log(sortedCategories);
+  const sortedCategories = sortableArray.sort((a, b) => a.count - b.count);
 
   for (const cat in sortedCategories) {
-    genres.add(sortedCategories[cat].key);
+    genres.unshift(sortedCategories[cat].key);
   }
 
-  return Array.from(genres);
+  return genres;
+};
+
+const initializeRestaurantsByGenres = (restaurants) => {
+  const genres = initializeGenres(restaurants);
+  let genreRestaurants = {};
+  genres.forEach((genre) => {
+    genreRestaurants[genre] = new Array();
+    restaurants.forEach((resto) => {
+      if (resto.genres.includes(genre)) {
+        genreRestaurants[genre].push(resto);
+      }
+    });
+  });
+  Object.entries(genreRestaurants).map(([genre, restaurants]) =>
+    console.log(genre, restaurants)
+  );
+  return genreRestaurants;
 };
 
 export default function HomePage() {
-  const [genres, setGenres] = useState([]);
+  const [restoGenres, setRestoGenres] = useState([]);
 
   const genresQuery = useQuery({
     queryKey: ["genres"],
@@ -60,11 +72,13 @@ export default function HomePage() {
   useEffect(() => {
     if (genresQuery.isSuccess) {
       const restaurants = genresQuery.data.items;
-      setGenres(Array.from(initializeGenres(restaurants)));
+      setRestoGenres(initializeRestaurantsByGenres(restaurants));
     }
   }, [genresQuery.data, genresQuery.isSuccess]);
 
-  if (genresQuery.isLoading) return <h1>Loading...</h1>;
+  if (genresQuery.isLoading) {
+    return <h1>Loading...</h1>;
+  }
   if (genresQuery.isError) {
     return <pre>{JSON.stringify(genresQuery.error)}</pre>;
   }
@@ -77,9 +91,15 @@ export default function HomePage() {
       <div className={style.content}>
         <div className={style.contentheader}></div>
         <div className={style.contentresto}>
-          {genres.map((genre) => (
-            <NetflixSlider genre={genre} key={genre} />
-          ))}
+          {genresQuery.isSuccess
+            ? Object.entries(restoGenres).map(([genre, restaurants]) => (
+                <NetflixSlider
+                  restaurants={restaurants}
+                  genre={genre}
+                  key={genre}
+                />
+              ))
+            : null}
         </div>
       </div>
     </div>

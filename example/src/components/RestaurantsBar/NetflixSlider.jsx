@@ -9,92 +9,59 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const initializeRestaurantsByGenre = (restaurants, genre) => {
-  let genreRestaurants = [];
-  for (const restaurant of restaurants) {
-    if (restaurant.genres.includes(genre)) {
-      genreRestaurants.push(restaurant);
-    }
-  }
-  return genreRestaurants;
-};
-
-const useThrottle = (callback, delay) => {
-  const [waiting, setWaiting] = useState(false);
-
-  const throttledFunction = useCallback(
-    (...args) => {
-      if (!waiting) {
-        callback(...args);
-        setWaiting(true);
-        setTimeout(() => {
-          setWaiting(false);
-        }, delay);
-      }
-    },
-    [callback, delay, waiting]
-  );
-
-  return throttledFunction;
-};
-
 const getItemsPerScreen = () => {
   if (window.innerWidth < 600) {
     return 2;
   } else if (window.innerWidth < 1000) {
     return 4;
   } else {
-    return 6;
+    return 5;
   }
 };
 
-export default function NetflixSlider(props) {
+export default function NetflixSlider({ restaurants, genre, ...props }) {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [itemsPerScreen, setItemsPerScreen] = useState(getItemsPerScreen());
-  const [restaurants, setRestaurants] = useState([]);
-
-  const restoQuery = useQuery({
-    queryKey: ["resto"],
-    queryFn: () =>
-      axios
-        .get("https://ufoodapi.herokuapp.com/unsecure/restaurants?limit=130")
-        .then((res) => res.data),
-  });
-
-  useEffect(() => {
-    if (restoQuery.isSuccess) {
-      const restos = restoQuery.data.items;
-      setRestaurants(initializeRestaurantsByGenre(restos, props.genre));
-    }
-  }, [restoQuery.data, restoQuery.isSuccess, props.genre]);
+  const restaurantsLen = restaurants.length;
 
   useEffect(() => {
     const slider = document.querySelector(`.${classes.slider}`);
-
     if (slider) {
-      slider.style.setProperty("--items-per-screen", itemsPerScreen.toString());
+      slider.style.setProperty("--items-per-screen", getItemsPerScreen());
+      //   slider.style.setProperty("--items-per-screen", getItemsPerScreen());
     }
-  }, [itemsPerScreen]);
 
-  const handleResize = useThrottle(() => {
-    if (window.innerWidth < 600) {
-      setItemsPerScreen(2);
-    } else if (window.innerWidth < 1000) {
-      setItemsPerScreen(4);
-    } else {
-      setItemsPerScreen(6);
-    }
-  }, 250);
-
-  useEffect(() => {
+    const handleResize = () => {
+      const newItemsPerScreen = getItemsPerScreen();
+      setItemsPerScreen(newItemsPerScreen);
+    };
     window.addEventListener("resize", handleResize);
     handleResize();
+
     return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
+  }, []);
+
+  //   useEffect(() => {
+  //     const slider = document.querySelector(`.${classes.slider}`);
+  //     if (!slider) return;
+  //     if (restaurantsLen < itemsPerScreen) {
+  //       slider.style.setProperty("--items-per-screen", restaurantsLen.toString());
+  //       setItemsPerScreen(restaurantsLen);
+  //     } else {
+  //       slider.style.setProperty("--items-per-screen", itemsPerScreen.toString());
+  //     }
+  //     console.log("restaurantsLen", restaurantsLen);
+  //     console.log(
+  //       "itemsPerScreen",
+  //       itemsPerScreen,
+  //       " --> ",
+  //       slider.style.getPropertyValue("--items-per-screen")
+  //     );
+  //   }, [itemsPerScreen, restaurantsLen]);
 
   const calculateArrayInit = () => {
-    if (restaurants.length > itemsPerScreen) {
-      return restaurants.length - itemsPerScreen + 1;
+    if (restaurantsLen > itemsPerScreen) {
+      return restaurantsLen - itemsPerScreen + 1;
     }
     return 1;
   };
@@ -125,20 +92,27 @@ export default function NetflixSlider(props) {
             <FontAwesomeIcon icon={faAngleLeft} className={classes.text} />
           </button>
           <div
-            className={classes.slider}
+            className={`${classes.slider} ${
+              restaurantsLen < itemsPerScreen && classes.noslide
+            }`}
             style={{
               transform: `translateX(${
                 (sliderIndex * -100) / itemsPerScreen
               }%)`,
             }}
           >
+            {/* <div className={classes.sliderimage}> */}
             {restaurants.map((restaurant, index) => (
               <img
                 key={index}
-                src={restaurant.pictures[0]}
+                src={restaurant.pictures[1]}
                 alt={`Restaurant ${index + 1}`}
+                style={{
+                  maxWidth: `${100 / itemsPerScreen}%`,
+                }}
               />
             ))}
+            {/* </div> */}
           </div>
           <button
             className={`${classes.handle} ${classes.right_handle} ${
@@ -150,7 +124,7 @@ export default function NetflixSlider(props) {
           </button>
         </div>
         <div className={classes.header}>
-          <h3 className={classes.title}>{capitalize(props.genre)}</h3>
+          <h3 className={classes.title}>{capitalize(genre)}</h3>
           <div className={classes.progress_bar}>
             {[...Array(calculateArrayInit())].map((_, i) => (
               <div

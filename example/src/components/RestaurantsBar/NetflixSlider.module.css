@@ -6,7 +6,8 @@
 
 :root {
   --handle-size: 3rem;
-  --img-gap: 0.35rem;
+  --img-gap: 0.25rem;
+  /* --slider-index: 0; */
 }
 
 .row {
@@ -18,29 +19,37 @@
   display: flex;
   justify-content: center;
   overflow: hidden;
-  position: relative;
   order: 2;
-  border: 1px solid orange;
+  flex-direction: row;
 }
 
 .slider {
-  --items-per-screen: 6;
-  --slider-index: 0;
+  /* --items-per-screen: 5; */
   display: flex;
-  flex-grow: 1;
   margin: 0 var(--img-gap);
   /* transform: translateX(calc(var(--slider-index) * -100%)); */
   transition: transform 250ms ease-in-out;
-  border: 3px solid blue;
-  /* width: 90rem; */
+  width: 100%;
+}
+
+.slider.noslide {
+  width: 100vw;
+}
+
+.slider > .sliderimage {
+  display: flex;
+  align-items: flex-start;
+  /* max-width: calc((90vw / var(--items-per-screen) * 6)); */
 }
 
 .slider > img {
-  flex: 0 0 calc(100% / var(--items-per-screen));
-  max-width: calc(100% / var(--items-per-screen));
+  /* flex: 0 0 calc(100% / var(--items-per-screen));
+  max-width: calc(100% / var(--items-per-screen)); */
   aspect-ratio: 16 / 9;
   padding: var(--img-gap);
   border-radius: 1rem;
+  object-fit: cover;
+  max-height: max-content;
 }
 
 .handle {
@@ -74,7 +83,6 @@
 }
 
 .handle:hover {
-  /* background-color: rgba(255, 255, 255, 0.5); */
   opacity: 1;
   background: rgb(0 0 0 / 0.3);
 }
@@ -111,7 +119,6 @@
   margin-top: 3rem;
   order: 1;
   justify-content: space-between;
-  border: 3px solid red;
 }
 
 .title {
@@ -147,16 +154,16 @@
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   .slider {
     --items-per-screen: 4;
   }
-}
+} */
 
 @media (max-width: 600px) {
-  .slider {
+  /* .slider {
     --items-per-screen: 2;
-  }
+  } */
   .header {
     flex-direction: row;
   }
@@ -166,3 +173,64 @@
     justify-content: flex-end;
   }
 }
+
+/* ################### BorderTools ################### */
+
+/* .row {
+  border: 3px dashed blue;
+} */
+
+/* .container {
+  border: 1px dashed orange;
+} */
+
+.slider {
+  border: 5px solid white;
+}
+
+.slider > .sliderimage {
+  border: 3px solid lightcoral;
+}
+
+/* .slider > img {
+  border: 1px solid limegreen;
+} */
+
+.handle {
+  /* # Bydefault # border: 1px solid transparent; # By default #*/
+
+  /* border: 3px solid purple; */
+}
+
+/* .text {
+  border: 3px solid burlywood;
+} */
+
+/* .header {
+  border: 1px dashed red;
+} */
+
+/* .title {
+  border: 1px solid yellow;
+} */
+
+/* .progress_bar {
+  border: 3px solid turquoise;
+} */
+
+/* .progress_item {
+  border: 5px solid goldenrod;
+} */
+
+/* ###### Note ######## */
+
+/* 
+
+
+
+
+
+
+
+
+*/

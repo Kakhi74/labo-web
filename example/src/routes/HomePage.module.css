@@ -28,11 +28,29 @@
 }
 
 .contentheader {
-  border: 1px solid limegreen;
   min-height: 65%;
   min-width: 100%;
   align-self: center;
 }
 
 .contentresto {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
+
+/* ################ BorderTools ##################### */
+
+/* .navBar {
+  border: 3px dotted blue;
+} */
+
+/* .content {
+  border: 3px dotted red;
+} */
+/* .contentheader {
+  border: 3px dotted orange;
+} */
+/* .contentresto {
+  border: 3px dotted limegreen;
+} */
