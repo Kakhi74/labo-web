@@ -7,31 +7,25 @@
 :root {
   --handle-size: 3rem;
   --img-gap: 0.25rem;
-  /* --slider-index: 0; */
 }
 
 .row {
   display: flex;
   flex-direction: column;
+  color: white;
 }
 
 .container {
   display: flex;
-  justify-content: center;
   overflow-x: hidden;
   order: 2;
   flex-direction: row;
 }
 
 .slider {
-  /* --items-per-screen: 5; */
   display: flex;
   margin: 0 var(--img-gap);
-  /* transform: translateX(calc(var(--slider-index) * -100%)); */
   transition: transform 250ms ease-in-out;
-}
-
-.slider.noslide {
 }
 
 .sliderimage {
@@ -40,8 +34,6 @@
 }
 
 .sliderimage > img {
-  /* flex: 0 0 calc(100% / var(--items-per-screen));
-  max-width: calc(100vw / var(--items-per-screen)); */
   aspect-ratio: 16 / 9;
   padding: var(--img-gap);
   border-radius: 1rem;
@@ -150,18 +142,10 @@
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* @media (max-width: 1000px) {
-  .slider {
-    --items-per-screen: 4;
-  }
-} */
-
 @media (max-width: 420px) {
   .progress_bar {
     display: none;
     max-width: 0px;
-
-    /* max-width: 345px; */
   }
 
   .sliderimage {
@@ -179,9 +163,6 @@
 }
 
 @media (max-width: 600px) {
-  /* .slider {
-    --items-per-screen: 2;
-  } */
   .header {
     flex-direction: column;
   }
@@ -194,12 +175,9 @@
     overflow: hidden;
     justify-content: flex-end;
     flex-wrap: wrap-reverse;
-    /* max-width: 345px; */
   }
 
   .sliderimage > img {
-    /* flex: 0 0 calc(100% / var(--items-per-screen));
-    max-width: calc(100vw / var(--items-per-screen)); */
     aspect-ratio: 16 / 9;
     padding: var(--img-gap);
     border-radius: 1rem;
@@ -213,17 +191,17 @@
   border: 3px dashed blue;
 } */
 
-.container {
+/* .container {
   border: 1px dashed orange;
-}
+} */
 
 /* .slider {
   border: 5px solid white;
 } */
 
-.slider > .sliderimage {
+/* .slider > .sliderimage {
   border: 3px solid lightcoral;
-}
+} */
 
 /* .slider > img {
   border: 1px solid limegreen;
@@ -239,21 +217,21 @@
   border: 3px solid burlywood;
 } */
 
-.header {
+/* .header {
   border: 1px dashed red;
-}
+} */
 
-.title {
+/* .title {
   border: 1px solid yellow;
-}
+} */
 
-.progress_bar {
+/* .progress_bar {
   border: 3px solid turquoise;
-}
+} */
 
-.progress_item {
+/* .progress_item {
   border: 1px solid goldenrod;
-}
+} */
 
 /* ###### Note ######## */
 

@@ -1,23 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import classes from "./NetflixSlider.module.css";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
-
-// const getItemsPerScreen = () => {
-//   if (window.innerWidth < 600) {
-//     return 2;
-//   } else if (window.innerWidth < 1000) {
-//     return 4;
-//   } else {
-//     return 5;
-//   }
-// };
 
 export default function NetflixSlider({
   restaurants,
@@ -27,17 +15,6 @@ export default function NetflixSlider({
 }) {
   const [sliderIndex, setSliderIndex] = useState(0);
   const restaurantsLen = restaurants.length;
-
-  //   useEffect(() => {
-  //     const handleResize = () => {
-  //       const newItemsPerScreen = getItemsPerScreen();
-  //       setItemsPerScreen(newItemsPerScreen);
-  //     };
-  //     window.addEventListener("resize", handleResize);
-  //     handleResize();
-
-  //     return () => window.removeEventListener("resize", handleResize);
-  //   }, []);
 
   const calculateArrayInit = () => {
     if (restaurantsLen > itemsPerScreen) {
@@ -70,9 +47,7 @@ export default function NetflixSlider({
             <FontAwesomeIcon icon={faAngleLeft} className={classes.text} />
           </button>
           <div
-            className={`${classes.slider} ${
-              restaurantsLen < itemsPerScreen && classes.noslide
-            }`}
+            className={`${classes.slider}`}
             style={{
               transform: `translateX(${
                 (sliderIndex * -100) / itemsPerScreen
@@ -84,7 +59,7 @@ export default function NetflixSlider({
                 <img
                   key={index}
                   src={restaurant.pictures[1]}
-                  alt={`Restaurant ${index + 1}`}
+                  alt={`Restaurant: ${restaurant.name}`}
                   style={{
                     maxWidth:
                       restaurantsLen < itemsPerScreen

@@ -36,8 +36,15 @@
 
 .contentresto {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.short_resto_wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
 }
 
 @media (max-width: 420px) {
@@ -64,6 +71,6 @@
 /* .contentheader {
   border: 3px dotted orange;
 } */
-.contentresto {
+/* .contentresto {
   border: 3px dotted limegreen;
-}
+} */

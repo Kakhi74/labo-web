@@ -1,7 +1,7 @@
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import NetflixSlider from "../components/RestaurantsBar/NetflixSlider";
-import RestoNetflix from "../components/RestaurantsBar/RestoNetflix";
 import style from "./HomePage.module.css";
+import "./HomePage.css";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -25,10 +25,12 @@ const aggregateGenresCounts = (obj) => {
       key.split(",").forEach((k) => {
         if (!counts[k]) counts[k] = 0;
         counts[k] += obj[key].length;
+        console.log(k, obj[key].length, counts[k]);
       });
     } else {
       if (!counts[key]) counts[key] = 0;
       counts[key] += obj[key].length;
+      console.log(key, obj[key].length, counts[key]);
     }
   }
   return counts;
@@ -38,18 +40,26 @@ const initializeGenres = (restaurants) => {
   let genres = new Array();
   const categories = Object.groupBy(restaurants, (resto) => resto.genres);
 
+  console.log("categories,", categories);
+
   let counts = aggregateGenresCounts(categories);
+  console.log("counts", counts);
   let sortableArray = [];
   for (let category in counts) {
     sortableArray.push({ key: category, count: counts[category] });
   }
 
+  console.log("categorie object,", sortableArray);
+
   const sortedCategories = sortableArray.sort((a, b) => a.count - b.count);
+
+  console.log("categorie object,", sortedCategories);
 
   for (const cat in sortedCategories) {
     genres.unshift(sortedCategories[cat].key);
   }
 
+  console.log("genres", genres);
   return genres;
 };
 
@@ -64,9 +74,7 @@ const initializeRestaurantsByGenres = (restaurants) => {
       }
     });
   });
-  Object.entries(genreRestaurants).map(([genre, restaurants]) =>
-    console.log(genre, restaurants)
-  );
+  console.log("genreRestaurants", genreRestaurants);
   return genreRestaurants;
 };
 
@@ -115,18 +123,34 @@ export default function HomePage() {
       <div className={style.content}>
         <div className={style.contentheader}></div>
         <div className={style.contentresto}>
-          {genresQuery.isSuccess
-            ? Object.entries(restoGenres).map(([genre, restaurants]) =>
-                restaurants.length >= itemsPerScreen ? (
-                  <NetflixSlider
-                    restaurants={restaurants}
-                    genre={genre}
-                    itemsPerScreen={itemsPerScreen}
-                    key={genre}
-                  />
-                ) : null
-              )
-            : null}
+          <div id="longResto" className={style.long_resto_wrapper}>
+            {genresQuery.isSuccess
+              ? Object.entries(restoGenres).map(([genre, restaurants]) =>
+                  restaurants.length >= itemsPerScreen ? (
+                    <NetflixSlider
+                      restaurants={restaurants}
+                      genre={genre}
+                      itemsPerScreen={itemsPerScreen}
+                      key={genre}
+                    />
+                  ) : null
+                )
+              : null}
+          </div>
+          <div id="shortResto" className={style.short_resto_wrapper}>
+            {genresQuery.isSuccess
+              ? Object.entries(restoGenres).map(([genre, restaurants]) =>
+                  restaurants.length < itemsPerScreen ? (
+                    <NetflixSlider
+                      restaurants={restaurants}
+                      genre={genre}
+                      itemsPerScreen={itemsPerScreen}
+                      key={genre}
+                    />
+                  ) : null
+                )
+              : null}
+          </div>
         </div>
       </div>
     </div>
