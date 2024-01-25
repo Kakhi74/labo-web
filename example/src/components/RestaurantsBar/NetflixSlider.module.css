@@ -18,7 +18,7 @@
 .container {
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: hidden;
   order: 2;
   flex-direction: row;
 }
@@ -29,27 +29,23 @@
   margin: 0 var(--img-gap);
   /* transform: translateX(calc(var(--slider-index) * -100%)); */
   transition: transform 250ms ease-in-out;
-  width: 100%;
 }
 
 .slider.noslide {
-  width: 100vw;
 }
 
-.slider > .sliderimage {
+.sliderimage {
   display: flex;
   align-items: flex-start;
-  /* max-width: calc((90vw / var(--items-per-screen) * 6)); */
 }
 
-.slider > img {
+.sliderimage > img {
   /* flex: 0 0 calc(100% / var(--items-per-screen));
-  max-width: calc(100% / var(--items-per-screen)); */
+  max-width: calc(100vw / var(--items-per-screen)); */
   aspect-ratio: 16 / 9;
   padding: var(--img-gap);
   border-radius: 1rem;
   object-fit: cover;
-  max-height: max-content;
 }
 
 .handle {
@@ -160,17 +156,54 @@
   }
 } */
 
+@media (max-width: 420px) {
+  .progress_bar {
+    display: none;
+    max-width: 0px;
+
+    /* max-width: 345px; */
+  }
+
+  .sliderimage {
+    max-width: 239px;
+  }
+
+  .sliderimage > img {
+    max-width: 116px;
+    max-height: 65px;
+  }
+
+  .progress_item {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
   /* .slider {
     --items-per-screen: 2;
   } */
   .header {
-    flex-direction: row;
+    flex-direction: column;
+  }
+  .header > .title {
+    font-size: medium;
   }
 
   .progress_bar {
+    display: flex;
     overflow: hidden;
     justify-content: flex-end;
+    flex-wrap: wrap-reverse;
+    /* max-width: 345px; */
+  }
+
+  .sliderimage > img {
+    /* flex: 0 0 calc(100% / var(--items-per-screen));
+    max-width: calc(100vw / var(--items-per-screen)); */
+    aspect-ratio: 16 / 9;
+    padding: var(--img-gap);
+    border-radius: 1rem;
+    object-fit: cover;
   }
 }
 
@@ -180,13 +213,13 @@
   border: 3px dashed blue;
 } */
 
-/* .container {
+.container {
   border: 1px dashed orange;
-} */
-
-.slider {
-  border: 5px solid white;
 }
+
+/* .slider {
+  border: 5px solid white;
+} */
 
 .slider > .sliderimage {
   border: 3px solid lightcoral;
@@ -206,21 +239,21 @@
   border: 3px solid burlywood;
 } */
 
-/* .header {
+.header {
   border: 1px dashed red;
-} */
+}
 
-/* .title {
+.title {
   border: 1px solid yellow;
-} */
+}
 
-/* .progress_bar {
+.progress_bar {
   border: 3px solid turquoise;
-} */
+}
 
-/* .progress_item {
-  border: 5px solid goldenrod;
-} */
+.progress_item {
+  border: 1px solid goldenrod;
+}
 
 /* ###### Note ######## */
 

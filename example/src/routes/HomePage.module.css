@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
 }
 
 .navBar {
@@ -29,14 +30,26 @@
 
 .contentheader {
   min-height: 65%;
-  min-width: 100%;
+  max-width: 100%;
   align-self: center;
 }
 
 .contentresto {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
+}
+
+@media (max-width: 420px) {
+  .contentheader {
+    min-height: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .contentheader {
+    min-height: 30%;
+  }
 }
 
 /* ################ BorderTools ##################### */
@@ -51,6 +64,6 @@
 /* .contentheader {
   border: 3px dotted orange;
 } */
-/* .contentresto {
+.contentresto {
   border: 3px dotted limegreen;
-} */
+}

@@ -6,6 +6,18 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+const getItemsPerScreen = () => {
+  if (window.innerWidth < 600) {
+    return 2;
+  } else if (window.innerWidth < 800) {
+    return 3;
+  } else if (window.innerWidth < 1000) {
+    return 4;
+  } else {
+    return 5;
+  }
+};
+
 const aggregateGenresCounts = (obj) => {
   let counts = {};
   for (let key in obj) {
@@ -60,6 +72,18 @@ const initializeRestaurantsByGenres = (restaurants) => {
 
 export default function HomePage() {
   const [restoGenres, setRestoGenres] = useState([]);
+  const [itemsPerScreen, setItemsPerScreen] = useState(getItemsPerScreen());
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newItemsPerScreen = getItemsPerScreen();
+      setItemsPerScreen(newItemsPerScreen);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const genresQuery = useQuery({
     queryKey: ["genres"],
@@ -92,13 +116,16 @@ export default function HomePage() {
         <div className={style.contentheader}></div>
         <div className={style.contentresto}>
           {genresQuery.isSuccess
-            ? Object.entries(restoGenres).map(([genre, restaurants]) => (
-                <NetflixSlider
-                  restaurants={restaurants}
-                  genre={genre}
-                  key={genre}
-                />
-              ))
+            ? Object.entries(restoGenres).map(([genre, restaurants]) =>
+                restaurants.length >= itemsPerScreen ? (
+                  <NetflixSlider
+                    restaurants={restaurants}
+                    genre={genre}
+                    itemsPerScreen={itemsPerScreen}
+                    key={genre}
+                  />
+                ) : null
+              )
             : null}
         </div>
       </div>

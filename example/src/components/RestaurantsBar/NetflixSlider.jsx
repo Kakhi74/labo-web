@@ -9,55 +9,35 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const getItemsPerScreen = () => {
-  if (window.innerWidth < 600) {
-    return 2;
-  } else if (window.innerWidth < 1000) {
-    return 4;
-  } else {
-    return 5;
-  }
-};
+// const getItemsPerScreen = () => {
+//   if (window.innerWidth < 600) {
+//     return 2;
+//   } else if (window.innerWidth < 1000) {
+//     return 4;
+//   } else {
+//     return 5;
+//   }
+// };
 
-export default function NetflixSlider({ restaurants, genre, ...props }) {
+export default function NetflixSlider({
+  restaurants,
+  genre,
+  itemsPerScreen,
+  ...props
+}) {
   const [sliderIndex, setSliderIndex] = useState(0);
-  const [itemsPerScreen, setItemsPerScreen] = useState(getItemsPerScreen());
   const restaurantsLen = restaurants.length;
 
-  useEffect(() => {
-    const slider = document.querySelector(`.${classes.slider}`);
-    if (slider) {
-      slider.style.setProperty("--items-per-screen", getItemsPerScreen());
-      //   slider.style.setProperty("--items-per-screen", getItemsPerScreen());
-    }
-
-    const handleResize = () => {
-      const newItemsPerScreen = getItemsPerScreen();
-      setItemsPerScreen(newItemsPerScreen);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   //   useEffect(() => {
-  //     const slider = document.querySelector(`.${classes.slider}`);
-  //     if (!slider) return;
-  //     if (restaurantsLen < itemsPerScreen) {
-  //       slider.style.setProperty("--items-per-screen", restaurantsLen.toString());
-  //       setItemsPerScreen(restaurantsLen);
-  //     } else {
-  //       slider.style.setProperty("--items-per-screen", itemsPerScreen.toString());
-  //     }
-  //     console.log("restaurantsLen", restaurantsLen);
-  //     console.log(
-  //       "itemsPerScreen",
-  //       itemsPerScreen,
-  //       " --> ",
-  //       slider.style.getPropertyValue("--items-per-screen")
-  //     );
-  //   }, [itemsPerScreen, restaurantsLen]);
+  //     const handleResize = () => {
+  //       const newItemsPerScreen = getItemsPerScreen();
+  //       setItemsPerScreen(newItemsPerScreen);
+  //     };
+  //     window.addEventListener("resize", handleResize);
+  //     handleResize();
+
+  //     return () => window.removeEventListener("resize", handleResize);
+  //   }, []);
 
   const calculateArrayInit = () => {
     if (restaurantsLen > itemsPerScreen) {
@@ -75,8 +55,6 @@ export default function NetflixSlider({ restaurants, genre, ...props }) {
       if (newIndex >= progressBarItemCount) newIndex = 0;
       return newIndex;
     });
-    // const slider = document.querySelector(`.${classes.slider}`);
-    // slider.setProperty("--slider-index", sliderIndex);
   };
 
   return (
@@ -101,18 +79,21 @@ export default function NetflixSlider({ restaurants, genre, ...props }) {
               }%)`,
             }}
           >
-            {/* <div className={classes.sliderimage}> */}
-            {restaurants.map((restaurant, index) => (
-              <img
-                key={index}
-                src={restaurant.pictures[1]}
-                alt={`Restaurant ${index + 1}`}
-                style={{
-                  maxWidth: `${100 / itemsPerScreen}%`,
-                }}
-              />
-            ))}
-            {/* </div> */}
+            <div className={classes.sliderimage}>
+              {restaurants.map((restaurant, index) => (
+                <img
+                  key={index}
+                  src={restaurant.pictures[1]}
+                  alt={`Restaurant ${index + 1}`}
+                  style={{
+                    maxWidth:
+                      restaurantsLen < itemsPerScreen
+                        ? `${100 / itemsPerScreen}vw`
+                        : `${100 / itemsPerScreen}%`,
+                  }}
+                />
+              ))}
+            </div>
           </div>
           <button
             className={`${classes.handle} ${classes.right_handle} ${
