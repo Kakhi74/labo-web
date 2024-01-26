@@ -1,7 +1,6 @@
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import NetflixSlider from "../../components/RestaurantsBar/NetflixSlider";
+import NetflixSlider from "../../components/NetflixSlider/NetflixSlider";
 import style from "./HomePage.module.css";
-import "./HomePage.css";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -70,7 +69,6 @@ const initializeRestaurantsByGenres = (restaurants) => {
 export default function HomePage() {
   const [restoGenres, setRestoGenres] = useState([]);
   const [itemsPerScreen, setItemsPerScreen] = useState(getItemsPerScreen());
-  const [ambiance, setAmbiance] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -94,13 +92,10 @@ export default function HomePage() {
   useEffect(() => {
     if (genresQuery.isSuccess) {
       const restaurants = genresQuery.data.items;
+      console.log(restaurants);
       setRestoGenres(initializeRestaurantsByGenres(restaurants));
     }
   }, [genresQuery.data, genresQuery.isSuccess]);
-
-  useEffect(() => {
-    setAmbiance(() => restoGenres.ambiance);
-  }, [restoGenres, genresQuery.isSuccess]);
 
   if (genresQuery.isLoading) {
     return <h1>Loading...</h1>;
@@ -109,46 +104,42 @@ export default function HomePage() {
     return <pre>{JSON.stringify(genresQuery.error)}</pre>;
   }
 
-  return (
+  return genresQuery.isSuccess ? (
     <div className={style.fullPage}>
       <div className={style.navBar}>
         <NavigationBar />
       </div>
       <div className={style.content}>
         <div className={style.contentheader}>
-          <NetflixHeader ambianceRestaurants={ambiance} />
+          {/* <NetflixHeader ambianceRestaurants={ambiance} /> */}
         </div>
         <div className={style.contentresto}>
           <div id="longResto" className={style.long_resto_wrapper}>
-            {genresQuery.isSuccess
-              ? Object.entries(restoGenres).map(([genre, restaurants]) =>
-                  restaurants.length >= itemsPerScreen ? (
-                    <NetflixSlider
-                      restaurants={restaurants}
-                      genre={genre}
-                      itemsPerScreen={itemsPerScreen}
-                      key={genre}
-                    />
-                  ) : null
-                )
-              : null}
+            {Object.entries(restoGenres).map(([genre, restaurants]) =>
+              restaurants.length >= itemsPerScreen ? (
+                <NetflixSlider
+                  restaurants={restaurants}
+                  genre={genre}
+                  itemsPerScreen={itemsPerScreen}
+                  key={genre}
+                />
+              ) : null
+            )}
           </div>
           <div id="shortResto" className={style.short_resto_wrapper}>
-            {genresQuery.isSuccess
-              ? Object.entries(restoGenres).map(([genre, restaurants]) =>
-                  restaurants.length < itemsPerScreen ? (
-                    <NetflixSlider
-                      restaurants={restaurants}
-                      genre={genre}
-                      itemsPerScreen={itemsPerScreen}
-                      key={genre}
-                    />
-                  ) : null
-                )
-              : null}
+            {Object.entries(restoGenres).map(([genre, restaurants]) =>
+              restaurants.length < itemsPerScreen ? (
+                <NetflixSlider
+                  restaurants={restaurants}
+                  genre={genre}
+                  itemsPerScreen={itemsPerScreen}
+                  key={genre}
+                />
+              ) : null
+            )}
           </div>
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }
