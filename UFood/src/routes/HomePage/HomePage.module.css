@@ -29,9 +29,12 @@
 }
 
 .contentheader {
-  min-height: 65%;
-  max-width: 100%;
-  align-self: center;
+  min-height: 60%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid blue;
 }
 
 .contentresto {

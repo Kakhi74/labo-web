@@ -1,10 +1,11 @@
-import NavigationBar from "../components/NavigationBar/NavigationBar";
-import NetflixSlider from "../components/RestaurantsBar/NetflixSlider";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import NetflixSlider from "../../components/RestaurantsBar/NetflixSlider";
 import style from "./HomePage.module.css";
 import "./HomePage.css";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import NetflixHeader from "../../components/NetflixHeader/NetflixHeader";
 
 const getItemsPerScreen = () => {
   if (window.innerWidth < 600) {
@@ -25,12 +26,10 @@ const aggregateGenresCounts = (obj) => {
       key.split(",").forEach((k) => {
         if (!counts[k]) counts[k] = 0;
         counts[k] += obj[key].length;
-        console.log(k, obj[key].length, counts[k]);
       });
     } else {
       if (!counts[key]) counts[key] = 0;
       counts[key] += obj[key].length;
-      console.log(key, obj[key].length, counts[key]);
     }
   }
   return counts;
@@ -40,26 +39,17 @@ const initializeGenres = (restaurants) => {
   let genres = new Array();
   const categories = Object.groupBy(restaurants, (resto) => resto.genres);
 
-  console.log("categories,", categories);
-
   let counts = aggregateGenresCounts(categories);
-  console.log("counts", counts);
+
   let sortableArray = [];
   for (let category in counts) {
     sortableArray.push({ key: category, count: counts[category] });
   }
 
-  console.log("categorie object,", sortableArray);
-
   const sortedCategories = sortableArray.sort((a, b) => a.count - b.count);
-
-  console.log("categorie object,", sortedCategories);
-
   for (const cat in sortedCategories) {
     genres.unshift(sortedCategories[cat].key);
   }
-
-  console.log("genres", genres);
   return genres;
 };
 
@@ -74,13 +64,13 @@ const initializeRestaurantsByGenres = (restaurants) => {
       }
     });
   });
-  console.log("genreRestaurants", genreRestaurants);
   return genreRestaurants;
 };
 
 export default function HomePage() {
   const [restoGenres, setRestoGenres] = useState([]);
   const [itemsPerScreen, setItemsPerScreen] = useState(getItemsPerScreen());
+  const [ambiance, setAmbiance] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,6 +98,10 @@ export default function HomePage() {
     }
   }, [genresQuery.data, genresQuery.isSuccess]);
 
+  useEffect(() => {
+    setAmbiance(() => restoGenres.ambiance);
+  }, [restoGenres, genresQuery.isSuccess]);
+
   if (genresQuery.isLoading) {
     return <h1>Loading...</h1>;
   }
@@ -121,7 +115,9 @@ export default function HomePage() {
         <NavigationBar />
       </div>
       <div className={style.content}>
-        <div className={style.contentheader}></div>
+        <div className={style.contentheader}>
+          <NetflixHeader ambianceRestaurants={ambiance} />
+        </div>
         <div className={style.contentresto}>
           <div id="longResto" className={style.long_resto_wrapper}>
             {genresQuery.isSuccess

@@ -15,7 +15,6 @@ function NavigationBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setInputValue(e.target.value);
-    console.log(inputValue);
   };
 
   return (
