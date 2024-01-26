@@ -22,8 +22,6 @@ const showDropdown = () => {
     const dropDownItem = document.createElement("div");
     dropDownItem.id = "dropdown-items";
 
-    console.log(filteredRestaurants);
-
     if (filteredRestaurants.length === 0) {
       const item = document.createElement("div");
       item.innerText = "No results found";
