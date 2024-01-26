@@ -14,6 +14,7 @@ export default function NetflixSlider({
   ...props
 }) {
   const [sliderIndex, setSliderIndex] = useState(0);
+  const [wait, setWait] = useState(false);
   const restaurantsLen = restaurants.length;
 
   const calculateArrayInit = () => {
@@ -32,6 +33,15 @@ export default function NetflixSlider({
       if (newIndex >= progressBarItemCount) newIndex = 0;
       return newIndex;
     });
+  };
+
+  const handleMouseEnter = () => {
+    console.log("mouse enter");
+    if (wait) {
+      setTimeout(() => {
+        setWait(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -57,6 +67,7 @@ export default function NetflixSlider({
             <div className={classes.sliderimage}>
               {restaurants.map((restaurant, index) => (
                 <img
+                  onMouseEnter={handleMouseEnter}
                   key={index}
                   src={restaurant.pictures[1]}
                   alt={`Restaurant: ${restaurant.name}`}

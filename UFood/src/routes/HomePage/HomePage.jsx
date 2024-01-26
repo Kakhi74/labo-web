@@ -1,10 +1,10 @@
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import NetflixSlider from "../../components/NetflixSlider/NetflixSlider";
+import NetflixCarousel from "../../components/NetflixCarousel/NetflixCarousel";
 import style from "./HomePage.module.css";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import NetflixHeader from "../../components/NetflixHeader/NetflixHeader";
+import Netflix from "../../components/NetflixCarousel/Netflix";
 
 const getItemsPerScreen = () => {
   if (window.innerWidth < 600) {
@@ -117,7 +117,7 @@ export default function HomePage() {
           <div id="longResto" className={style.long_resto_wrapper}>
             {Object.entries(restoGenres).map(([genre, restaurants]) =>
               restaurants.length >= itemsPerScreen ? (
-                <NetflixSlider
+                <NetflixCarousel
                   restaurants={restaurants}
                   genre={genre}
                   itemsPerScreen={itemsPerScreen}
@@ -126,10 +126,22 @@ export default function HomePage() {
               ) : null
             )}
           </div>
+          <div id="stack-carousel">
+            {Object.entries(restoGenres).map(([genre, restaurants]) =>
+              restaurants.length >= itemsPerScreen ? (
+                <Netflix
+                  key={`h-${genre}`}
+                  restaurants={restaurants}
+                  genre={`index-${genre}`}
+                  itemsPerScreen={itemsPerScreen}
+                />
+              ) : null
+            )}
+          </div>
           <div id="shortResto" className={style.short_resto_wrapper}>
             {Object.entries(restoGenres).map(([genre, restaurants]) =>
               restaurants.length < itemsPerScreen ? (
-                <NetflixSlider
+                <NetflixCarousel
                   restaurants={restaurants}
                   genre={genre}
                   itemsPerScreen={itemsPerScreen}
