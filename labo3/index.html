@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="./app.js"></script>
+    <link rel="stylesheet" href="./toast.css" />
+  </head>
+  <body>
+    <input id="toast-input" placeholder="Texte de la modification de toast" />
+    <div class="toast-buttons">
+      <button type="button" class="toast-button" data-type="info">INFO</button>
+      <button type="button" class="toast-button" data-type="success">
+        SUCCESS
+      </button>
+      <button type="button" class="toast-button" data-type="error">
+        ERROR
+      </button>
+    </div>
+    <div id="toast-container"></div>
+  </body>
+</html>
