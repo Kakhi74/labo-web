@@ -87,13 +87,9 @@ var pre = new Prefixer("Hello ");
 console.log(pre.prefixArray(["Brad", "Jeff"])); // [ 'Hello Brad', 'Hello Jeff' ]
 
 // Chap1 : présentation et notions de base
-
 // chap2 : Architecture et javascript de base
-
 // chap3 : javascript moderne
-
 // chap4 : interactions serveur
-
 // chap5 : Architecture web
 
 // La ressource retourne le JSON suivant :
@@ -228,61 +224,51 @@ class Book {
   }
 }
 
-// const book = new Book("Le Seigneur des Anneaux", 1200, 12);
-// console.log(book.getInformation());
-// console.log(book.name); // undefined
+const book = new Book("Le Seigneur des Anneaux", 1200, 12);
+console.log(book.getInformation());
+console.log(book.name);
 
-// class Library {
-//   #borrowedBooks;
-//   #availableBooks;
+class Library {
+  #borrowedBooks;
+  #availableBooks;
 
-//   constructor(books = []) {
-//     this.#borrowedBooks = new Map();
-//     this.#availableBooks = new Map(books.map((book) => [book.name, book]));
-//   }
+  constructor(books = []) {
+    this.#borrowedBooks = new Map();
+    this.#availableBooks = new Map(books.map((book) => [book.name, book]));
+  }
 
-//   addBook(book) {
-//     if (
-//       this.#availableBooks.has(book.name) ||
-//       this.#borrowedBooks.has(book.name)
-//     ) {
-//       throw new Error(
-//         `Le livre ${book.name} existe déjà dans la bibliothèque.`
-//       );
-//     }
-//     this.#availableBooks.set(book.name, book);
-//   }
+  addBook(book) {
+    if (
+      this.#availableBooks.has(book.name) ||
+      this.#borrowedBooks.has(book.name)
+    ) {
+      throw new Error(
+        `Le livre ${book.name} existe déjà dans la bibliothèque.`
+      );
+    }
+    this.#availableBooks.set(book.name, book);
+  }
 
-//   borrowBook(name) {
-//     if (!this.#availableBooks.has(name)) {
-//       throw new Error(`Le livre ${name} n'est pas disponible ou n'existe pas.`);
-//     }
-//     const book = this.#availableBooks.get(name);
-//     this.#availableBooks.delete(name);
-//     this.#borrowedBooks.set(name, book);
-//     return book;
-//   }
+  borrowBook(name) {
+    if (!this.#availableBooks.has(name)) {
+      throw new Error(`Le livre ${name} n'est pas disponible ou n'existe pas.`);
+    }
+    const book = this.#availableBooks.get(name);
+    this.#availableBooks.delete(name);
+    this.#borrowedBooks.set(name, book);
+    return book;
+  }
 
-//   removeBook(name) {
-//     if (this.#availableBooks.has(name)) {
-//       this.#availableBooks.delete(name);
-//     } else if (this.#borrowedBooks.has(name)) {
-//       this.#borrowedBooks.delete(name);
-//     } else {
-//       throw new Error(`Le livre ${name} n'existe pas dans la bibliothèque.`);
-//     }
-//   }
-// }
-
-// const book1 = new Book("Le Seigneur des Anneaux", 1200, 12);
-// const book2 = new Book("Harry Potter", 800, 10);
-// const library = new Library([book1, book2]);
-// library.addBook(new Book("Coco", 1200, 12));
-// library.borrowBook("Le Seigneur des Anneaux");
-// library.borrowBook("Harry Potter");
-// library.removeBook("Harry Potter");
-// library.removeBook("Le Seigneur des Anneaux");
-// library.removeBook("Le Seigneur des Anneaux"); // Error
+  removeBook(name) {
+    if (this.#availableBooks.has(name)) {
+      this.#availableBooks.delete(name);
+    } else if (this.#borrowedBooks.has(name)) {
+      this.#borrowedBooks.delete(name);
+    } else {
+      throw new Error(`Le livre ${name} n'existe pas dans la bibliothèque.`);
+    }
+  }
+}
 
 class Library {
   #borrowedBooks;
