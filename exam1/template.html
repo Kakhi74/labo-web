@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Handlebars.js Demo for a Restaurant</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  </head>
+  <body>
+    <script id="restaurant-template" type="text/x-handlebars-template">
+      <h2>{{name}}</h2>
+      <h3>Opening Hours:</h3>
+      <ul>
+        {{#each opening_hours}}
+          <li>{{@key}}: {{this}}</li>
+        {{/each}}
+      </ul>
+      <h3>Pictures:</h3>
+      <div>
+        {{#each pictures}}
+          <img src="{{this}}" alt="Restaurant Image" />
+        {{/each}}
+      </div>
+      <h3>Genres:</h3>
+      <ul>
+        {{#each genres}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      <p>Telephone: {{tel}}</p>
+      <p>Address: {{address}}</p>
+      <p>Price Range: {{price_range}}</p>
+      <p>Rating: {{rating}}</p>
+      <p>Place ID: {{place_id}}</p>
+      <p>ID: {{id}}</p>
+      <h3>Location:</h3>
+      <p>Coordinates: {{location.coordinates}}</p>
+      <p>Type: {{location.type}}</p>
+    </script>
+
+    <div id="restaurant-info"></div>
+
+    <script>
+      import displayRestaurant from './api.js';
+
+      const source = document.getElementById("restaurant-template").innerHTML;
+      const template = Handlebars.compile(source);
+      const data = await displayRestaurant("5f31fc6155d7790550c08afe");
+      document.getElementById("restaurant-info").innerHTML = template(data);
+    </script>
+  </body>
+</html>
