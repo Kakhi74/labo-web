@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { v4 } = require("uuid");
+const uuid = require("uuid");
 
 const corsOptions = {
   origin: "*",
@@ -13,24 +13,32 @@ app.use(cors(corsOptions));
 app.use(express.json());
 const port = 8080;
 
-const users = [];
-const tasks = [];
+let users = [];
+let tasks = [];
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Server root");
 });
 
-app.post("/users", (req, res) => {
-  const userId = v4();
+app.post("/users", (_, res) => {
+  const userId = uuid.v4();
   users.push(userId);
-  return res.status(200).send(JSON.stringify({ id: userId }));
+  return res.status(201).send(JSON.stringify({ id: userId }));
 });
 
 const validateUserExists = (userId, res, callback) => {
   if (users.includes(userId)) {
     callback();
   } else {
-    return res.status(404).send(`User with id ${userId} not found`);
+    return res.status(404).send(`Not found: user with id ${userId}`);
+  }
+};
+
+const validateTaskExists = (taskId, res, callback) => {
+  if (tasks.find((value) => value.id === taskId)) {
+    callback();
+  } else {
+    return res.status(404).send(`Not found: task with id ${taskId}`);
   }
 };
 
@@ -42,19 +50,11 @@ const validateTask = (taskName, res, callback) => {
   }
 };
 
-const validateTaskExists = (taskId, res, callback) => {
-  if (tasks.find((value) => value.id === taskId)) {
-    callback();
-  } else {
-    return res.status(404).send(`Task with id ${taskId} not found`);
-  }
-};
-
 app.get("/:userId/tasks", (req, res) => {
   const userId = req.params.userId;
 
   validateUserExists(userId, res, () => {
-    return res.status(200).send({ tasks: tasks });
+    return res.status(200).send({ tasks });
   });
 });
 
@@ -79,7 +79,7 @@ app.post("/:userId/tasks", (req, res) => {
 
   validateUserExists(userId, res, () => {
     validateTask(req.body.name, res, () => {
-      const task = { id: v4(), name: req.body.name };
+      const task = { id: uuid.v4(), name: req.body.name };
       tasks.push(task);
       return res.status(201).send(task);
     });
@@ -93,7 +93,7 @@ app.delete("/:userId/tasks/:taskId", (req, res) => {
   validateUserExists(userId, res, () => {
     validateTaskExists(taskId, res, () => {
       tasks = tasks.filter((value) => value.id !== taskId);
-      return res.status(204).send("Task is deleted");
+      return res.status(204).send(`Deleted: task with id ${taskId}`);
     });
   });
 });

@@ -1,4 +1,5 @@
-const ENDPOINT = "https://glo3102lab4.herokuapp.com";
+//const ENDPOINT = "https://glo3102lab4.herokuapp.com";
+const ENDPOINT = "http://localhost:8080";
 
 export const getUserId = async () => {
   return fetch(`${ENDPOINT}/users`, {
