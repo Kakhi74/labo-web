@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>labo9</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div id="username-form">
+      <span>Username</span>
+      <input id="username" />
+      <button id="username-submit">Submit</button>
+    </div>
+    <div id="chat" style="display: none">
+      <ul id="messages"></ul>
+      <form id="form">
+        <input id="input" />
+        <button>Send</button>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("username-submit")
+        .addEventListener("click", () => {
+          const usernameInput = document.getElementById("username").value;
+          if (usernameInput) {
+            const username = usernameInput;
+
+            document.getElementById("username-form").style.display = "none";
+            document.getElementById("chat").style = "";
+
+            const socket = io();
+
+            const form = document.getElementById("form");
+            const input = document.getElementById("input");
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
+              if (input.value) {
+                socket.emit("chat message", { username, message: input.value });
+                input.value = "";
+              }
+            });
+
+            const messages = document.getElementById("messages");
+            socket.on("chat message", (msg) => {
+              const item = document.createElement("li");
+              item.textContent = `${msg.username}: ${msg.message}`;
+              messages.appendChild(item);
+            });
+          }
+        });
+    </script>
+  </body>
+</html>
