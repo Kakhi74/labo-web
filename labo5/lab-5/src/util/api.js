@@ -1,15 +1,19 @@
 //const ENDPOINT = "https://glo3102lab4.herokuapp.com";
 const ENDPOINT = "http://localhost:8080";
 
+// export const getUserId = async () => {
+//   return fetch(`${ENDPOINT}/users`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => data.id);
+// };
+
 export const getUserId = async () => {
-  return fetch(`${ENDPOINT}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => data.id);
+  return "un-id";
 };
 
 // const USER_ID = await getUserId();
